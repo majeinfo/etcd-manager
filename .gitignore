@@ -1,3 +1,5 @@
 ./save
 ./frontend
 ./backend/etcd-manager
+backend.sh
+frontend.sh

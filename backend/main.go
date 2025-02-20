@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -21,7 +22,7 @@ type EtcdManager struct {
 }
 
 var (
-	etcdEndpoints  *string
+	etcdEndpoints  []string
 	pathToCACert *string
 	pathToCert *string
 	pathToKey *string
@@ -163,7 +164,7 @@ func set_parameters() {
 
 	// Define command-line flags
 	listenPort = flag.String("listen-port", defaultListenPort, "Listening port")
-	etcdEndpoints = flag.String("etcd-endpoints", defaultEtcdEndpoints, "Etcd endpoints")
+	_etcdEndpoints := flag.String("etcd-endpoints", defaultEtcdEndpoints, "Etcd endpoints")
 	pathToCACert = flag.String("cacert", defaultPathToCACert, "Etcd CA certificate")
 	pathToCert = flag.String("cert", defaultPathToCert, "Certificate")
 	pathToKey = flag.String("key", defaultPathToKey, "Private key")
@@ -171,6 +172,8 @@ func set_parameters() {
 
 	// Parse the flags
 	flag.Parse()
+
+	etcdEndpoints = strings.Split(*_etcdEndpoints, ",")
 }
 
 func main() {
@@ -197,7 +200,7 @@ func main() {
 		*pathToCert,
 		*pathToKey,
 		*pathToCACert,
-		[]string{*etcdEndpoints}, // Your etcd endpoints
+		etcdEndpoints, // Your etcd endpoints
 	)
 	if err != nil {
 		log.Fatal(err)
