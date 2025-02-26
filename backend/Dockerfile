@@ -1,5 +1,5 @@
 FROM golang:1.24-bookworm as builder
-RUN apt-get update && apt-get install git -y
+RUN apt-get update && apt-get install git -y && rm -rf /var/cache/apt /var/lib/apt/lists/*
 WORKDIR /
 RUN git clone -b main https://github.com/majeinfo/etcd-manager.git
 WORKDIR /etcd-manager/backend
