@@ -1,0 +1,44 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main  # Runs when pushing to main branch
+  pull_request:
+    branches:
+      - main  # Runs on pull requests to main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Frontend Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/etcd-manager-frontend:latest frontend-src
+          docker image tag ${{ secrets.DOCKER_USERNAME }}/etcd-manager-frontend:latest ${{ secrets.DOCKER_USERNAME }}/etcd-manager-frontend:${{ github.sha }}
+
+      - name: Push Frontend Docker image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/etcd-manager-frontend:latest
+
+      - name: Build Backend Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/etcd-manager-backend:latest backend
+          docker image tag ${{ secrets.DOCKER_USERNAME }}/etcd-manager-backend:latest ${{ secrets.DOCKER_USERNAME }}/etcd-manager-backend:${{ github.sha }}
+
+      - name: Push Backend Docker image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/etcd-manager-backend:latest
+
+
+
