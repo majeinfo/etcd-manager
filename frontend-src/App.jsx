@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+
 function App() {
   const [endpoints, setEndpoints] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -9,7 +12,7 @@ function App() {
   const fetchStatus = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/api/status');
+      const response = await fetch(`${API_URL}/api/status`);
       const data = await response.json();
       setEndpoints(data);
       setError(null);
@@ -23,7 +26,7 @@ function App() {
   const compactDatabase = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/api/compact', {
+      const response = await fetch(`${API_URL}/api/compact`, {
         method: 'POST',
       });
       const data = await response.json();
@@ -43,7 +46,7 @@ function App() {
   const defragDatabase = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/api/defrag', {
+      const response = await fetch(`${API_URL}/api/defrag`, {
         method: 'POST',
       });
       const data = await response.json();
