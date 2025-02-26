@@ -6,7 +6,6 @@ import (
 	"crypto/x509"
 	"flag"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -15,6 +14,7 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	clientv3 "go.etcd.io/etcd/client/v3"
+	"github.com/sirupsen/logrus"
 )
 
 type EtcdManager struct {
@@ -28,6 +28,7 @@ var (
 	pathToKey *string
 	listenPort *string
 	debug *bool
+	logger = logrus.New()
 )
 
 func loadTLSConfig(certFile, keyFile, caFile string) (*tls.Config, error) {
@@ -132,6 +133,14 @@ func (em *EtcdManager) defragEndpoints(c *gin.Context) {
 }
 
 func set_parameters() {
+	// Get log level from environment variable
+	levelStr := os.Getenv("LOG_LEVEL")
+	level, err := logrus.ParseLevel(strings.ToLower(levelStr))
+	if err != nil {
+		level = logrus.InfoLevel // Default to INFO if invalid level
+	}
+	logger.SetLevel(level)
+
 	// Set defaults from environment variables
 	/*
 	defaultPort := 8080
@@ -173,7 +182,15 @@ func set_parameters() {
 	// Parse the flags
 	flag.Parse()
 
+	if *debug {
+		logger.SetLevel(logrus.DebugLevel)
+	}
+
 	etcdEndpoints = strings.Split(*_etcdEndpoints, ",")
+	logger.Debugf("etcd endpoints: %v", etcdEndpoints)
+	logger.Debugf("cacert: %s", *pathToCACert)
+	logger.Debugf("cert: %s", *pathToCert)
+	logger.Debugf("key: %s", *pathToKey)
 }
 
 func main() {
@@ -203,7 +220,7 @@ func main() {
 		etcdEndpoints, // Your etcd endpoints
 	)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	// Routes
