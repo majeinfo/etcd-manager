@@ -1,6 +1,9 @@
 ./save
-./frontend
+./frontend-src
 ./backend/etcd-manager
 etcd-manager
 backend.sh
 frontend.sh
+node_modules
+dist
+k8s
