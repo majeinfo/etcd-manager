@@ -21,13 +21,24 @@
   margin: 0 auto;
 }
 
+/*
 .actions {
   margin: 20px 0;
   display: flex;
   gap: 10px;
-  justify-content: center;  /* Centers buttons horizontally */
-  align-items: center;      /* Centers buttons vertically */
-  flex-wrap: wrap;          /* Ensures buttons wrap if screen is small */
+  justify-content: center;  
+  align-items: center;     
+  flex-wrap: wrap;        
+}
+*/
+
+.actions {
+  width: 100%;  /* Ensures full width */
+  display: flex;
+  justify-content: center; /* Centers buttons horizontally */
+  align-items: center; /* Centers buttons vertically */
+  flex-wrap: wrap; /* Prevents buttons from overflowing */
+  margin: 20px 0;
 }
 
 .action-button {
@@ -58,12 +69,23 @@
   background-color: #1976D2;
 }
 
+/*
 .endpoints-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
   margin-top: 20px;
-  /* justify-content: center; /* Centers grid items */
+  justify-content: center; 
+}
+*/
+
+.endpoints-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  justify-content: center; /* Centers grid items horizontally */
+  align-items: center; /* Centers items vertically */
+  width: 100%; /* Ensures full width */
 }
 
 .endpoint-card {
