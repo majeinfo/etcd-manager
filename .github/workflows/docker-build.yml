@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main  # Runs when pushing to main branch
-  pull_request:
-    branches:
-      - main  # Runs on pull requests to main
+  #pull_request:
+  #  branches:
+  #    - main  # Runs on pull requests to main
 
 jobs:
   build-and-push:
@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Frontend Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/etcd-manager-frontend:latest frontend-src
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/etcd-manager-frontend:latest -f Dockerfile.frontend . 
           docker image tag ${{ secrets.DOCKER_USERNAME }}/etcd-manager-frontend:latest ${{ secrets.DOCKER_USERNAME }}/etcd-manager-frontend:${{ github.sha }}
 
       - name: Push Frontend Docker image
