@@ -7,3 +7,4 @@ frontend.sh
 node_modules
 dist
 k8s
+.vscode

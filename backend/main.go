@@ -5,7 +5,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"flag"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
@@ -37,7 +36,7 @@ func loadTLSConfig(certFile, keyFile, caFile string) (*tls.Config, error) {
 		return nil, err
 	}
 
-	caCert, err := ioutil.ReadFile(caFile)
+	caCert, err := os.ReadFile(caFile)
 	if err != nil {
 		return nil, err
 	}
@@ -88,6 +87,7 @@ func (em *EtcdManager) getEndpointStatus(c *gin.Context) {
 			"version":      status.Version,
 			"dbSize":      status.DbSize,
 			"dbSizeInUse": status.DbSizeInUse,
+			"errors": status.Errors,
 		}
 		statusInfo = append(statusInfo, info)
 	}
