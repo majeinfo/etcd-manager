@@ -121,7 +121,7 @@ function App() {
                   <strong>DB Size In Use:</strong> {(endpoint.dbSizeInUse / (1024 * 1024)).toFixed(2)} MB
                 </p>
 	        <p>
-		  <strong>Alarms &amps; Errors:<strong> {endpoint.errors}
+		  <strong>Alarms &amps; Errors:</strong> {endpoint.errors}
 		</p>
               </div>
             </div>
