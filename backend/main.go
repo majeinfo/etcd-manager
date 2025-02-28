@@ -83,6 +83,7 @@ func (em *EtcdManager) getEndpointStatus(c *gin.Context) {
 
 		info := map[string]interface{}{
 			//"endpoint":     status.Endpoint,
+			"node": ep,
 			"leader":       status.Header.MemberId == status.Leader,
 			"version":      status.Version,
 			"dbSize":      status.DbSize,
