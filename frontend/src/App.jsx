@@ -110,18 +110,20 @@ function App() {
               <h3>{endpoint.endpoint}</h3>
               <div className="endpoint-details">
                 <p>
-                  <strong>Node::</strong> {endpoint.node}
+                  <strong>Node:</strong> {endpoint.node}
                 </p>
                 <p>
-                  <strong>Version:</strong> {endpoint.version} 
+                  <strong>Version:</strong> {endpoint.version}
+		  &nbsp;&nbsp;&nbsp;
  		  <strong>Leader:</strong> {endpoint.leader ? 'Yes' : 'No'}
                 </p>
                 <p>
                   <strong>DB Size:</strong> {(endpoint.dbSize / (1024 * 1024)).toFixed(2)} MB
+		  &nbsp;&nbsp;&nbsp;
                   <strong>DB Size In Use:</strong> {(endpoint.dbSizeInUse / (1024 * 1024)).toFixed(2)} MB
                 </p>
 	        <p>
-		  <strong>Alarms &amps; Errors:</strong> {endpoint.errors}
+		  <strong>Alarms &amp; Errors:</strong> {endpoint.errors ? endpoint.errors : '-'}
 		</p>
               </div>
             </div>
